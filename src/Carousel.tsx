@@ -1,6 +1,14 @@
-import { Component } from "react";
+import { Component, MouseEvent } from "react";
+import { Animal } from "./APIResponsesTypes";
+
+interface IProps {
+  images: string[];
+  animal: Animal;
+  name: string;
+}
+
 const HERO_IMG = "http://pets-images.dev-apis.com/pets/none.jpg";
-class Carousel extends Component {
+class Carousel extends Component<IProps> {
   state = {
     active: 0,
   };
@@ -9,10 +17,15 @@ class Carousel extends Component {
     images: [HERO_IMG],
   };
 
-  handleIndexClick = (e) => {
-    this.setState({
-      active: +e.target.dataset.index,
-    });
+  handleIndexClick = (e: MouseEvent<HTMLElement>) => {
+    if (!(e.target instanceof HTMLElement)) {
+      return;
+    }
+    if (e.target.dataset.index) {
+      this.setState({
+        active: +e.target.dataset.index,
+      });
+    }
   };
 
   render() {
